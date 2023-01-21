@@ -1,34 +1,58 @@
 # Concuss
 
-TODO: Delete this and the text below, and describe your gem
+## What is it?
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/concuss`. To experiment with that code, run `bin/console` for an interactive prompt.
+Concuss is a tool for banging against a url with a bunch of different headers to look for potential vulnerabilities.
+
+It works by sending a custom or a random string to a webserver for a specific url in a variety of headers to see if it's able to get that string to appear on the page. If so, you'll get a HIT and you can evaluate that header to see if it's useful for some kind of XSS, cache poisoning, or some other form of injection from malformed headers.
+
+## What it is NOT.
+
+Concuss is not a tool for automating vulnerabilities, nor should it be used to certify that a page is safe from vulnerabilities. It should not be used on applications or website that you do not personally have permission to scan.
+
+Sending malformed headers to a site can potentially cause errors, crashing, and other damage that I am not responsible for as a result of any usage of this tool. You agree to use this tool at your own risk.
 
 ## Installation
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
-
 Install the gem and add to the application's Gemfile by executing:
 
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+    $ bundle add concuss
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+    $ gem install concuss
 
 ## Usage
 
-TODO: Write usage instructions here
+Primarily, you'll want to use it as a CLI like so:
+
+```
+concuss http://localhost:4567
+concuss http://localhost:4567 -h non_standard
+```
+
+See `concuss --help` for more usage details.
+
+While concuss is designed to be used as a command line tool, you can also include it in your own custom application like so:
+
+```
+require 'concuss'
+
+concuss = Concuss.new(url: 'http://localhost:4567', file: 'header_file.txt', header_set: :standard, test_string: "OOGABOOGA")
+concuss.attack!
+```
+
+This will spit out the results, which isn't super useful if you need to post process them... I'll work on that though.
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+After checking out the repo, run `script/setup` to install dependencies. Then, run `rspec` to run the tests. You can also run `script/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+If you add features or fix bugs, please write specs and open up a PR.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/concuss.
+Bug reports and pull requests are welcome on GitHub at https://github.com/patricktulskie/concuss
 
 ## License
 
