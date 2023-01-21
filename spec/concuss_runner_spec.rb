@@ -4,7 +4,7 @@ RSpec.describe Concuss::Runner do
   let(:headers) { ['X-Test-Header1', 'X-Test-Header2'] }
   let(:url) { 'http://test.com' }
   let(:test_string) { 'teststring' }
-  let(:runner) { Concuss::Runner.new(technique: 'test', headers: headers, url: url, test_string: test_string) }
+  let(:runner) { Concuss::Runner.new(headers: headers, url: url, test_string: test_string) }
 
   describe '#initialize' do
     it 'sets the headers' do

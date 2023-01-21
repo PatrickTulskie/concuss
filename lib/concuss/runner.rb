@@ -2,10 +2,9 @@ require 'securerandom'
 require 'net/http'
 
 class Concuss::Runner
-  attr_reader :technique, :headers, :url, :test_string
+  attr_reader :headers, :url, :test_string
 
-  def initialize(technique:, headers:, url:, test_string: nil)
-    @technique = technique
+  def initialize(headers:, url:, test_string: nil)
     @headers = headers
     @url = url
     @test_string = test_string || SecureRandom.hex(25)
