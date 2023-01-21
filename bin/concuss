@@ -1,0 +1,31 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/concuss'
+require 'optparse'
+
+options = { }
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: concuss [url] [options]"
+
+  opts.on("-f", "--file FILE", "Specify file with custom headers") do |v|
+    options[:file] = v
+  end
+
+  opts.on("-h", "--header-set [all|standard|non_standard]", "Header set. Default is 'all'. Ignored if a file is specified. ") do |v|
+    options[:header_set] = v.to_sym
+  end
+
+  opts.on("-t", "--test-string STRING", "Set a custom test string. If none specified, it sets a random string to match on.") do |v|
+    options[:test_string] = v
+  end
+end.parse!
+
+if ARGV[0].nil?
+  puts "Must provide a url. Try --help for usage."
+  exit 1
+end
+
+options[:url] = ARGV[0]
+
+Concuss.new(**options).attack!
