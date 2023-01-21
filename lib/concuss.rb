@@ -8,10 +8,10 @@ class Concuss
   def initialize(url:, file: nil, header_set: :all, test_string: nil)
     @url = url
     @file = file
-    @header_set = header_set
+    @header_set = file.nil? ? header_set : :file
     @test_string = test_string
 
-    @headers = Concuss::Headers.new(header_set: header_set, file: file).group
+    @headers = Concuss::Headers.new(header_set: @header_set, file: @file).group
   end
 
   def attack!
