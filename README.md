@@ -9,6 +9,8 @@ Concuss is a tool for banging against a url with a bunch of different headers to
 
 It works by sending a custom or a random string to a webserver for a specific url in a variety of headers to see if it's able to get that string to appear on the page. If so, you'll get a HIT and you can evaluate that header to see if it's useful for some kind of XSS, cache poisoning, or some other form of injection from malformed headers.
 
+Often times web app and framework developers assume that headers from the client are not malicious or manipulated and will just write them out to the page in one form or another. This project is a specialized tool to find instances of this so that they can be fixed before they are abused.
+
 ## What it is NOT.
 
 Concuss is not a tool for automating vulnerabilities, nor should it be used to certify that a page is safe from vulnerabilities. It should not be used on applications or website that you do not personally have permission to scan.
@@ -46,6 +48,23 @@ concuss.attack!
 ```
 
 This will spit out the results, which isn't super useful if you need to post process them... I'll work on that though.
+
+## Demo
+
+There is a sample app with a vulnerability to test with in the `vuln_app` directory. It takes the contents of `X-CSRF-Token` and spits them out blindly.
+
+Run it for testing like this:
+
+```
+docker build vuln_app -t vuln_app
+docker run -p 4567:4567 vuln_app
+```
+
+Then from the command line, or from another docker container, you should be able to run
+
+```concuss http://localhost:4567 -h non_standard```
+
+...and you'll see a HIT at the bottom.
 
 ## Development
 
