@@ -1,5 +1,8 @@
 # Concuss
 
+[![Gem Version](https://badge.fury.io/rb/concuss.svg)](https://badge.fury.io/rb/concuss)
+[![Build Status](https://github.com/patricktulskie/concuss/actions/workflows/main.yml/badge.svg)](https://github.com/patricktulskie/concuss/actions/workflows/main.yml)
+
 ## What is it?
 
 Concuss is a tool for banging against a url with a bunch of different headers to look for potential vulnerabilities.
@@ -49,6 +52,8 @@ This will spit out the results, which isn't super useful if you need to post pro
 After checking out the repo, run `script/setup` to install dependencies. Then, run `rspec` to run the tests. You can also run `script/console` for an interactive prompt that will allow you to experiment.
 
 If you add features or fix bugs, please write specs and open up a PR.
+
+Note: Concuss was designed to easily install on most systems with ruby 3+. As such, its only dependencies are in the ruby standard library.
 
 ## Contributing
 
