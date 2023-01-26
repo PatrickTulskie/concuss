@@ -59,7 +59,8 @@ Here's some steps to get going with that:
 docker-compose build
 docker-compose run console bash
 
-# You should see the vuln_app container boot up and then you'll land in bash on the console container
+# You should see the vuln_app container boot up and
+# then you'll land in bash on the console container
 
 bin/concuss http://vuln_app:4567 -h non_standard
 ```
