@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  vuln_app:
+    build:
+      context: vuln_app
+      dockerfile: Dockerfile
+    image: concuss-vuln_app
+    command: ["ruby", "vuln_app.rb", "-o", "0.0.0.0"]
+    ports:
+      - "4567:4567"
+    volumes:
+      - "./vuln_app:/app"
+  console:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: concuss-console
+    volumes:
+      - ".:/app"
+    depends_on:
+      - vuln_app

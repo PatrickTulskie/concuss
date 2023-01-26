@@ -53,22 +53,24 @@ This will spit out the results, which isn't super useful if you need to post pro
 
 There is a sample app with a vulnerability to test with in the `vuln_app` directory. It takes the contents of `X-CSRF-Token` and spits them out blindly.
 
-Run it for testing like this:
+Here's some steps to get going with that:
 
 ```
-docker build vuln_app -t vuln_app
-docker run -p 4567:4567 vuln_app
+docker-compose build
+docker-compose run console bash
+
+# You should see the vuln_app container boot up and then you'll land in bash on the console container
+
+bin/concuss http://vuln_app:4567 -h non_standard
 ```
-
-Then from the command line, or from another docker container, you should be able to run
-
-```concuss http://localhost:4567 -h non_standard```
-
-...and you'll see a HIT at the bottom.
 
 ## Development
 
-After checking out the repo, run `script/setup` to install dependencies. Then, run `rspec` to run the tests. You can also run `script/console` for an interactive prompt that will allow you to experiment.
+Primarily, you'll want to use Docker to do debugging and development. To get into the console, just run `docker-compose run console bash` and from there you can run `bin/concuss` against the sample vulnerable app, or you can run `rspec` to run the specs.
+
+If you prefer to develop without docker, after checking out the repo, run `bundle install` to install dependencies. Then, run `rspec` to run the tests.
+
+When developing using docker or on your bare machine you can also run `script/console` for an interactive prompt that will allow you to experiment. This will give you access to the underlying classes and let you experiment outside the confines of the CLI.
 
 If you add features or fix bugs, please write specs and open up a PR.
 
