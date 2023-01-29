@@ -30,7 +30,6 @@ class Concuss::Headers
     'Range',
     'Referer',
     'TE',
-    'User-Agent',
     'Upgrade',
     'Via',
     'Warning'

@@ -19,6 +19,10 @@ OptionParser.new do |opts|
   opts.on("-t", "--test-string STRING", "Set a custom test string. If none specified, it sets a random string to match on.") do |v|
     options[:test_string] = v
   end
+
+  opts.on("-a", "--user-agent STRING", "Set a custom user agent. If none specified, it defaults to Concuss/#{Concuss::VERSION}") do |v|
+    options[:user_agent] = v
+  end
 end.parse!
 
 if ARGV[0].nil?

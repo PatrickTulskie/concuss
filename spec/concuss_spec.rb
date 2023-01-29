@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe Concuss do
+  let(:user_agent) { 'Mozilla/5.0' }
+
   it "has a version number" do
     expect(Concuss::VERSION).not_to be nil
   end
@@ -18,7 +20,8 @@ RSpec.describe Concuss do
       concuss = Concuss.new(
         url: 'https://example.com',
         file: file_path,
-        test_string: 'example'
+        test_string: 'example',
+        user_agent: user_agent
       )
 
       expect(concuss.url).to eq('https://example.com')
@@ -26,6 +29,7 @@ RSpec.describe Concuss do
       expect(concuss.header_set).to eq(:file)
       expect(concuss.test_string).to eq('example')
       expect(concuss.headers).to eq(fake_headers)
+      expect(concuss.user_agent).to eq(user_agent)
     end
 
     it 'sets a default header_set if none are passed in' do
@@ -41,10 +45,15 @@ RSpec.describe Concuss do
 
   describe '#attack!' do
     it 'creates a new instance of Concuss::Runner' do
-      concuss = Concuss.new(url: 'https://example.com')
+      concuss = Concuss.new(url: 'https://example.com', user_agent: user_agent)
       runner = double('runner')
       expect(runner).to receive(:run)
-      expect(Concuss::Runner).to receive(:new).with(url: 'https://example.com', headers: Concuss::Headers.new(header_set: :all).group, test_string: nil).and_return(runner)
+      expect(Concuss::Runner).to receive(:new).with(
+        url: 'https://example.com',
+        user_agent: user_agent,
+        headers: Concuss::Headers.new(header_set: :all).group,
+        test_string: nil
+      ).and_return(runner)
       concuss.attack!
     end
   end
