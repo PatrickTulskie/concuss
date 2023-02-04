@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    concuss (0.2.0)
+    concuss (0.3.0)
 
 GEM
   remote: https://rubygems.org/
