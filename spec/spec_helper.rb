@@ -13,4 +13,13 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  def capture_stdout(&blk)
+    old = $stdout
+    $stdout = fake = StringIO.new
+    blk.call
+    fake.string
+  ensure
+    $stdout = old
+  end
 end

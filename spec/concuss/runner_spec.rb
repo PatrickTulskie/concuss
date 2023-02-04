@@ -23,6 +23,14 @@ RSpec.describe Concuss::Runner do
     it 'sets the user_agent' do
       expect(runner.user_agent).to eq(user_agent)
     end
+
+    context 'when setting the progress_type' do
+      let(:runner) { Concuss::Runner.new(headers: headers, url: url, progress_type: :dots) }
+
+      it 'sets the progress_type' do
+        expect(runner.progress_type).to eq(:dots)
+      end
+    end
   end
 
   describe '#run' do
@@ -38,8 +46,28 @@ RSpec.describe Concuss::Runner do
       runner.run
     end
 
-    it 'outputs the header, status code, and result' do
-      expect { runner.run }.to output("X-Test-Header1 - 200 - HIT\nX-Test-Header2 - 200 - HIT\n").to_stdout
+    it 'outputs the header, status code, and result when using full progress type' do
+      runner.instance_variable_set(:@progress_type, :full)
+      expected_output = <<-OUTPUT
+X-Test-Header1 - 200 - HIT
+X-Test-Header2 - 200 - HIT
+OUTPUT
+      output = capture_stdout { runner.run }
+      expect(output).to eq(expected_output)
+    end
+
+    it 'outputs dots when using the dot progress type' do
+      runner.instance_variable_set(:@progress_type, :dots)
+      output = capture_stdout { runner.run }
+      expect(output).to eq("..\n")
+    end
+
+    it 'returns a Report with the correct results' do
+      report = runner.run
+
+      expect(report).to be_a(Concuss::Report)
+      expect(report.hits.keys.sort).to eq(headers)
+      expect(report.hits.values.last[:response_code]).to eq('200')
     end
 
     it 'uses the custom user_agent' do
@@ -69,8 +97,22 @@ RSpec.describe Concuss::Runner do
         allow(Net::HTTP).to receive(:get_response).and_return(double(code: '200', body: 'no match'))
       end
 
-      it 'outputs "MISS" for the result' do
-        expect { runner.run }.to output("X-Test-Header1 - 200 - MISS\nX-Test-Header2 - 200 - MISS\n").to_stdout
+      it 'outputs the header, status code, and result when using full progress type' do
+        runner.instance_variable_set(:@progress_type, :full)
+        expected_output = <<-OUTPUT
+X-Test-Header1 - 200 - MISS
+X-Test-Header2 - 200 - MISS
+OUTPUT
+      output = capture_stdout { runner.run }
+      expect(output).to eq(expected_output)
+    end
+
+      it 'returns a Report with the correct results' do
+        report = runner.run
+
+        expect(report).to be_a(Concuss::Report)
+        expect(report.misses.keys.sort).to eq(headers)
+        expect(report.misses.values.last[:response_code]).to eq('200')
       end
     end
   end

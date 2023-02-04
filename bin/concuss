@@ -31,5 +31,9 @@ if ARGV[0].nil?
 end
 
 options[:url] = ARGV[0]
+options[:formatter] = Concuss::Formatters::Table
+options[:progress_type] = :dots
+
+puts "Scanning #{options[:url]}"
 
 Concuss.new(**options).attack!
