@@ -44,10 +44,10 @@ While concuss is designed to be used as a command line tool, you can also includ
 require 'concuss'
 
 concuss = Concuss.new(url: 'http://localhost:4567', file: 'header_file.txt', header_set: :standard, test_string: "OOGABOOGA")
-concuss.attack!
+report = concuss.attack!
 ```
 
-This will spit out the results, which isn't super useful if you need to post process them... I'll work on that though.
+From there, you'll get a `Concuss::Report` object that contains the raw data as well as filters for `hits`, `misses`, `headers`, and the `url` in the event you've done a bunch of these.
 
 ## Demo
 
