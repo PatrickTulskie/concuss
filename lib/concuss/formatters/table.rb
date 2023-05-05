@@ -1,11 +1,18 @@
+# The `Table` class is used to format the results of a Concuss attack as a table.
 class Concuss::Formatters::Table
-
+  # The headings for the table.
   HEADINGS = ['HEADER', 'RESPONSE_CODE', 'HIT/MISS'].freeze
 
+  # Creates a new `Table` object.
+  #
+  # @param report [Concuss::Report] The report to be formatted.
   def initialize(report)
     @report = report
   end
 
+  # Prints the table to the console.
+  #
+  # @return [nil]
   def print
     header_max_length = @report.headers.map(&:length).max
     response_code_length = HEADINGS[1].length
@@ -22,6 +29,11 @@ class Concuss::Formatters::Table
 
   private
 
+  # Prints the data to the console in the specified format.
+  #
+  # @param data [Hash] The data to be printed.
+  # @param header_format [String] The format string to use for the headers.
+  # @return [nil]
   def print_data(data, header_format)
     data.sort.each do |header, values|
       puts header_format % [header, values[:response_code], values[:hit] ? 'HIT' : 'MISS']
