@@ -1,6 +1,13 @@
+# The `Headers` class is used to group together a set of HTTP headers for use in a Concuss attack.
 class Concuss::Headers
-  attr_reader :header_set, :file
 
+  # The set of headers to use in the attack.
+  attr_reader :header_set
+
+  # The path to a file containing a list of headers to use in the attack.
+  attr_reader :file
+
+  # The set of standard HTTP headers that will be used in the attack.
   STANDARD_HEADERS = [
     'Accept',
     'Accept-Charset',
@@ -35,6 +42,7 @@ class Concuss::Headers
     'Warning'
   ]
 
+  # The set of non-standard HTTP headers that will be used in the attack.
   NON_STANDARD_HEADERS = [
     'X-Requested-With',
     'X-Forwarded-For',
@@ -43,11 +51,18 @@ class Concuss::Headers
     'X-CSRF-Token'
   ]
 
+  # Initializes a new `Headers` object.
+  #
+  # @param header_set [Symbol] The set of headers to use in the attack.
+  # @param file [String] The path to a file containing a list of headers to use in the attack.
   def initialize(header_set:, file: nil)
     @header_set = header_set
     @file = file
   end
 
+  # Returns the set of headers to use in the attack.a
+  #
+  # @return [Array<String>] The set of headers to use in the attack.
   def group
     case @header_set
     when :standard
@@ -65,6 +80,11 @@ class Concuss::Headers
 
   private
 
+  # Reads a file containing a list of headers to use in the attack.
+  # Each header should be on a separate line.
+  #
+  # @param file_path [String] The path to the file containing the list of headers.
+  # @return [Array<String>] The list of headers to use in the attack.
   def read_file(file_path)
     lines = []
     File.open(file_path, "r") do |file|
