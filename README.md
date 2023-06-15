@@ -1,4 +1,4 @@
-# Concuss
+![Concuss](documentation/img/concuss_logo.png)
 
 [![Gem Version](https://badge.fury.io/rb/concuss.svg)](https://badge.fury.io/rb/concuss)
 [![Build Status](https://github.com/patricktulskie/concuss/actions/workflows/main.yml/badge.svg)](https://github.com/patricktulskie/concuss/actions/workflows/main.yml)
