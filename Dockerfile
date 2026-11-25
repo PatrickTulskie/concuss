@@ -1,4 +1,4 @@
-from ruby:3.2
+from ruby:4.0
 COPY . /app/
 WORKDIR /app
 RUN bundle install
